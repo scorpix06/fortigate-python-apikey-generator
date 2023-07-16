@@ -57,7 +57,8 @@ class fortipy:
         token = token[:endIndex]
         self.token = token
 
-
+        return token
+    
     def upgrade(self, imageBaseUrl):
         """ 
             Founction that upgrade Fortigate, taking the image from a webserver 
@@ -93,11 +94,3 @@ class fortipy:
 
         except:
              print("Can't upgrade the fortigate")
-
-
-
-if __name__ == "__main__":
-    process = fortipy('192.168.0.99', 'admin', '')
-    #process.fistInit("test")
-    process.upgrade("192.168.40.112")
-    #process.createApiToken()
