@@ -10,8 +10,19 @@ Indeed, to fully automate the deployment of a new Fortigate device, the creation
 
  After these step, the fortigate API could be used to do the rest of the configuration.
 
-# Roadmap
+## Roadmap
 
 - Improve the upgrade method
 - Possibility to choose what kind of token create (Read-Only or Read-Write)
  
+## Download 
+
+### Install on Debian / Ubuntu
+
+```bash
+  sudo apt install python3-pip git -yq
+  git clone https://github.com/scorpix06/fortigate-python-apikey-generator.git
+  cd ./fortigate-python-apikey-generator
+  python3 -m pip install -r requirements.txt
+```
+    
