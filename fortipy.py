@@ -36,7 +36,7 @@ class fortipy:
         return stdout
 
     def createApiToken(self, apiUsername="RTS_Api", apiProfiles="Super_Admin_API"):
-        """ Create an API Administrator and an admin profile """
+        """ Create an API Administrator, an admin profile and generate a Read-Write API token """
 
         # Creation of the API account
         commands = ["config system accprofile","edit {}".format(apiProfiles),"set secfabgrp read-write","set ftviewgrp read-write","set authgrp read-write","set sysgrp read-write","set netgrp read-write","set loggrp read-write",
