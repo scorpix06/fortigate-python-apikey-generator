@@ -1,8 +1,5 @@
 import paramiko
-import threading
 import time
-import requests
-
 
 class fortipy:
 
