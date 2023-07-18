@@ -88,7 +88,7 @@ class fortipy:
         fileName = sn + '.out'
         url = "http://" + imageBaseUrl + "/" + fileName
 
-        # Working but to debug
+        # Working but to debug (not clean)
         try:
              channel.send('execute restore image url {}\n'.format(url))
              time.sleep(10)
