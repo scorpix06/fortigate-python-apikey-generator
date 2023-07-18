@@ -19,9 +19,6 @@ class fortipy:
         except:
             print("inpossible to connect to [{}] please verify that SSH is activated or the credentials are corrects")
 
-        
-        self.out = self.channel.recv(9999)
-
     def fistInit(self, newAdminPass):
         '''  Founction to change de default password on first power on '''
 
@@ -32,16 +29,31 @@ class fortipy:
 
         return stdout
 
-    def createApiToken(self, apiUsername="RTS_Api", apiProfiles="Super_Admin_API"):
-        """ Create an API Administrator, an admin profile and generate a Read-Write API token """
+    def createApiToken(self, apiUsername="RTS_Api", apiProfile="Super_Admin_API", tokenType="Read-Write"):
+        """ 
+        Create an API Administrator, an admin profile and generate a Read-Write API token 
 
-        # Creation of the API account
-        commands = ["config system accprofile","edit {}".format(apiProfiles),"set secfabgrp read-write","set ftviewgrp read-write","set authgrp read-write","set sysgrp read-write","set netgrp read-write","set loggrp read-write",
-    "set fwgrp read-write","set vpngrp read-write","set utmgrp read-write","set wanoptgrp read-write","set wifi read-write","next","end","config system api-user","edit '{}'".format(apiUsername),"set accprofile 'Super_Admin_API'","set vdom 'root'","next","end"]
+        apiUsername : Name of the API administrator account 
+        apiProfile : Name of the profile for API user (can't use default due to fortinet security)
+        tokenType: Autorisation for the API user (Read-Write or Read-Only)
+
+        """
+
+        channel = self.client.invoke_shell()
+
+        # Creation of the API profile and user
+        if tokenType == "Read-Write":
+            commands = ["config system accprofile","edit {}".format(apiProfile),"set secfabgrp read-write","set ftviewgrp read-write","set authgrp read-write","set sysgrp read-write","set netgrp read-write","set loggrp read-write",
+            "set fwgrp read-write","set vpngrp read-write","set utmgrp read-write","set wanoptgrp read-write","set wifi read-write","next","end","config system api-user","edit '{}'".format(apiUsername),"set accprofile '{}'".format(apiProfile),"set vdom 'root'","next","end"]
+        elif tokenType == "Read-Only":
+            commands = ["config system accprofile","edit {}".format(apiProfile),"set secfabgrp read","set ftviewgrp read","set authgrp read","set sysgrp read","set netgrp read","set loggrp read",
+            "set fwgrp read","set vpngrp read","set utmgrp read","set wanoptgrp read","set wifi read","next","end","config system api-user","edit '{}'".format(apiUsername),"set accprofile '{}'".format(apiProfile),"set vdom 'root'","next","end"]
 
         for command in commands:
             command = command + "\n"
-            self.channel.send(command)
+            channel.send(command)
+        
+        channel.close()
 
 
         # Generation du token et récupération de celui ci
