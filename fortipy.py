@@ -29,7 +29,7 @@ class fortipy:
 
         return stdout
 
-    def createApiToken(self, apiUsername="RTS_Api", apiProfile="Super_Admin_API", tokenType="Read-Write"):
+    def createApiToken(self, apiUsername="ApiUser", apiProfile="ApiProfile", tokenType="Read-Write"):
         """ 
         Create an API Administrator, an admin profile and generate a Read-Write API token 
 
